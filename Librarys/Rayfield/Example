@@ -1,7 +1,7 @@
 local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Rayfield/main/source'))()
 
 local Window = Rayfield:CreateWindow({
-   Name = "Rayfield Example Window",
+   Name = "Red X Hub",
    LoadingTitle = "Rayfield Interface Suite",
    LoadingSubtitle = "by Sirius",
    ConfigurationSaving = {
@@ -16,23 +16,23 @@ local Window = Rayfield:CreateWindow({
    },
    KeySystem = true, -- Set this to true to use our key system
    KeySettings = {
-      Title = "Sirius Hub",
-      Subtitle = "Key System",
-      Note = "Join the discord (discord.gg/sirius)",
+      Title = "Red x Hub",
+      Subtitle = "Key X System",
+      Note = "Key: Revenant",
       FileName = "SiriusKey",
       SaveKey = true,
       GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
-      Key = "Hello"
+      Key = "Revenant"
    }
 })
 
-local Tab = Window:CreateTab("Tab Example", 4483362458)
+local Tab = Window:CreateTab("esp", 4483362458)
 
-local Section = Tab:CreateSection("Section Example")
+local Section = Tab:CreateSection("...")
 
 Rayfield:Notify({
-   Title = "Notification Title",
-   Content = "Notification Content",
+   Title = "Red X Hub",
+   Content = "Enjoy!",
    Duration = 6.5,
    Image = 4483362458,
    Actions = { -- Notification Buttons
@@ -46,55 +46,257 @@ Rayfield:Notify({
 })
 
 local Button = Tab:CreateButton({
-   Name = "Button Example",
+   Name = "PLR esp",
    Callback = function()
-   -- The function that takes place when the button is pressed
+   local esp = loadstring(game:HttpGet('https://raw.githubusercontent.com/0f76/seere_v3/main/ESP/v3_esp.lua'))()
+
+esp.enabled = true
+
+esp.teamcheck = false
+
+esp.outlines = true
+esp.shortnames = true
+esp.team_boxes = {true,Color3.fromRGB(255,255,255),Color3.fromRGB(1,1,1),0}
+esp.team_chams = {true,Color3.fromRGB(138, 139, 194),Color3.fromRGB(138, 139, 194),.25,.75,true}
+esp.team_names = {true,Color3.fromRGB(255,255,255)}
+esp.team_weapon = { true, Color3.fromRGB(255,255,255)}
+esp.team_distance = true
+esp.team_health = true
    end,
 })
 
-local Toggle = Tab:CreateToggle({
-   Name = "Toggle Example",
-   CurrentValue = false,
-   Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-   Callback = function(Value)
-   -- The function that takes place when the toggle is pressed
-   -- The variable (Value) is a boolean on whether the toggle is true or false
-   end,
+local Button = Tab:CreateButton({
+   Name = "Name esp",
+   Callback = function()
+local c = workspace.CurrentCamera
+local ps = game:GetService("Players")
+local lp = ps.LocalPlayer
+local rs = game:GetService("RunService")
+
+local function esp(p,cr)
+	local h = cr:WaitForChild("Humanoid")
+	local hrp = cr:WaitForChild("Head")
+
+	local text = Drawing.new("Text")
+	text.Visible = false
+	text.Center = true
+	text.Outline = false 
+	text.Font = 3
+	text.Size = 16.16
+	text.Color = Color3.new(170,170,170)
+
+	local conection
+	local conection2
+	local conection3
+
+	local function dc()
+		text.Visible = false
+		text:Remove()
+		if conection then
+			conection:Disconnect()
+			conection = nil 
+		end
+		if conection2 then
+			conection2:Disconnect()
+			conection2 = nil 
+		end
+		if conection3 then
+			conection3:Disconnect()
+			conection3 = nil 
+		end
+	end
+
+	conection2 = cr.AncestryChanged:Connect(function(_,parent)
+		if not parent then
+			dc()
+		end
+	end)
+
+	conection3 = h.HealthChanged:Connect(function(v)
+		if (v<=0) or (h:GetState() == Enum.HumanoidStateType.Dead) then
+			dc()
+		end
+	end)
+
+	conection = rs.RenderStepped:Connect(function()
+		local hrp_pos,hrp_onscreen = c:WorldToViewportPoint(hrp.Position)
+		if hrp_onscreen then
+			text.Position = Vector2.new(hrp_pos.X, hrp_pos.Y - 27)
+			text.Text = "[ "..p.Name.." ]"
+			text.Visible = true
+		else
+			text.Visible = false
+		end
+	end)
+end
+
+local function p_added(p)
+	if p.Character then
+		esp(p,p.Character)
+	end
+	p.CharacterAdded:Connect(function(cr)
+		esp(p,cr)
+	end)
+end
+
+for i,p in next, ps:GetPlayers() do 
+	if p ~= lp then
+		p_added(p)
+	end
+end
+
+ps.PlayerAdded:Connect(p_added)
+end,
 })
 
-local Slider = Tab:CreateSlider({
-   Name = "Slider Example",
-   Range = {0, 100},
-   Increment = 10,
-   Suffix = "Bananas",
-   CurrentValue = 10,
-   Flag = "Slider1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-   Callback = function(Value)
-   -- The function that takes place when the slider changes
-   -- The variable (Value) is a number which correlates to the value the slider is currently at
-   end,
+local Tab = Window:CreateTab("Player", 4483362458)
+
+local Button = Tab:CreateButton({
+   Name = "Fast",
+   Callback = function()
+game.Players.LocalPLayer.Character.Humanoid.WalkSpeed = 50
+end,
 })
 
-local Input = Tab:CreateInput({
-   Name = "Input Example",
-   PlaceholderText = "Input Placeholder",
-   RemoveTextAfterFocusLost = false,
-   Callback = function(Text)
-   -- The function that takes place when the input is changed
-   -- The variable (Text) is a string for the value in the text box
-   end,
+local Button = Tab:CreateButton
+   Name = "High(Ban Chance)",
+   Callback = function()
+game.Players.LocalPLayer.Character.Humanoid.JumpPower = 50
+end,
 })
 
+local Button = Tab:CreateButton({
+   Name = "Custom Flashlight(Horror Game)",
+   Callback = function()
+Brightness1 = 4
+Brightness2 = .75
+Range1 = 32
+Range2 = 60
 
-local Dropdown = Tab:CreateDropdown({
-   Name = "Dropdown Example",
-   Options = {"Option 1","Option 2"},
-   CurrentOption = "Option 1",
-   Flag = "Dropdown1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-   Callback = function(Option)
-   -- The function that takes place when the selected option is changed
-   -- The variable (Option) is a string for the value that the dropdown was changed to
-   end,
+Players = game:GetService("Players")
+LocalPlayer = Players.LocalPlayer
+Backpack = LocalPlayer.Backpack
+StarterGui = game:GetService("StarterGui")
+
+local Flashlight = Instance.new("Tool", Backpack)
+Flashlight.GripPos = Vector3.new(0.1, -0.4, 0)
+Flashlight.Name = "Flashlight"
+Flashlight.TextureId = "http://www.roblox.com/asset/?id=115955232"
+
+local Handle = Instance.new("Part", Flashlight)
+Handle.BrickColor = BrickColor.new("Bright yellow")
+Handle.Color = Color3.fromRGB(245, 205, 48)
+Handle.Name = "Handle"
+Handle.Locked = true
+Handle.Size = Vector3.new(0.5, 0.5, 2)
+Handle.CanCollide = true
+
+local LightPart = Instance.new("Part", Flashlight)
+LightPart.BrickColor = BrickColor.new("Mid gray")
+LightPart.Color = Color3.fromRGB(205, 205, 205)
+LightPart.Transparency = 1
+LightPart.Name = "LightPart"
+LightPart.CanCollide = false
+LightPart.Locked = true
+LightPart.Size = Vector3.new(0.2, 0.2, 0.2)
+
+local Motor = Instance.new("Motor", Flashlight)
+Motor.Part0 = Handle
+Motor.Part1 = LightPart
+
+local Sound = Instance.new("Sound", Handle)
+Sound.SoundId = "http://www.roblox.com/asset/?id=115959318"
+Sound.Volume = 1
+
+local Mesh = Instance.new("SpecialMesh", Handle)
+Mesh.Name = "Mesh"
+Mesh.MeshId = "http://www.roblox.com/asset/?id=115955313"
+Mesh.MeshType = "FileMesh"
+Mesh.Scale = Vector3.new(0.7, 0.7, 0.7)
+Mesh.TextureId = "http://www.roblox.com/asset?id=115955343"
+
+local SpotLight = Instance.new("SpotLight", LightPart)
+SpotLight.Name = "SpotLight"
+SpotLight.Angle = 70
+SpotLight.Brightness = Brightness1
+SpotLight.Color = Color3.fromRGB(244, 255, 233)
+SpotLight.Enabled = false
+SpotLight.Face = "Front"
+SpotLight.Range = Range1
+
+local SpotLight2 = Instance.new("SpotLight", LightPart)
+SpotLight2.Name = "SpotLight2"
+SpotLight2.Angle = 70
+SpotLight2.Brightness = Brightness2
+SpotLight2.Color = Color3.fromRGB(244, 255, 233)
+SpotLight2.Enabled = false
+SpotLight2.Range = Range2
+
+sp = Flashlight
+
+cooldown = .35
+
+lightontexture = 115984370
+lightofftexture = 115955343
+
+local weld = sp:WaitForChild("Motor")
+local lp = sp:WaitForChild("LightPart")
+local handle = sp:WaitForChild("Handle")
+local spotlight = lp:WaitForChild("SpotLight")
+local spotlight2 = lp:WaitForChild("SpotLight2")
+local mesh = handle:WaitForChild("Mesh")
+local sound = handle:WaitForChild("Sound")
+lastclick = 0
+
+sp.Equipped:connect(
+   function(mouse)
+       equipped = true
+       if mouse ~= nil then
+           themouse = mouse
+           mouse.Button1Down:connect(
+               function()
+                   if lastclick + cooldown < tick() then
+                       spotlight.Enabled = not spotlight.Enabled
+                       spotlight2.Enabled = spotlight.Enabled
+                       mesh.TextureId =
+                           "http://www.roblox.com/asset?id=" ..
+                           tostring((spotlight.Enabled and lightontexture) or lightofftexture)
+                       sound:Play()
+                       lastclick = tick()
+                   end
+               end
+           )
+       end
+       if weld ~= nil then
+           weld.Parent = sp
+       end
+       while equipped and sp.Parent ~= nil do
+           local head = sp.Parent:FindFirstChild("Head")
+           if spotlight.Enabled and themouse and handle and weld and head then
+               local vec = themouse.Hit.p - head.Position
+               local pos = (handle.CFrame * CFrame.new(0, 0, -1)).p
+               local cf = CFrame.new(pos, pos + vec)
+               --lp.CFrame=cf
+               weld.C0 = handle.CFrame:toObjectSpace(cf)
+           end
+           wait()
+       end
+   end
+)
+
+sp.Unequipped:connect(
+   function()
+       if weld ~= nil then
+           weld.Parent = sp
+       end
+       equipped = false
+   end
+)
+
+
+local Flashlight2 = Flashlight:clone()
+Flashlight2.Parent = StarterGui
+end,
 })
 
 local Paragraph = Tab:CreateParagraph({Title = "Paragraph Example", Content = "Paragraph Example"})
